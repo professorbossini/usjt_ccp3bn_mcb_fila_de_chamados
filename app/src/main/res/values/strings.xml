@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">usjt_ccp3bn_mcb_fila_de_chamados</string>
+    <string name="action_settings">Settings</string>
+    <string name="dica_nome_fila">Digite o nome da Fila</string>
+</resources>
