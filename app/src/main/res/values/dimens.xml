@@ -1,4 +1,5 @@
 <resources>
     <dimen name="fab_margin_end">16dp</dimen>
     <dimen name="fab_margin_top">75dp</dimen>
+    <dimen name="fila_icon_width">24dp</dimen>
 </resources>
