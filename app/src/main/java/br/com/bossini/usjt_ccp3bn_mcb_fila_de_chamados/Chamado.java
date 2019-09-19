@@ -2,10 +2,11 @@ package br.com.bossini.usjt_ccp3bn_mcb_fila_de_chamados;
 
 import androidx.annotation.NonNull;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Locale;
 
-public class Chamado {
+public class Chamado implements Serializable {
     private String descricao;
     private Date dataAbertura;
     private Date dataFechamento;

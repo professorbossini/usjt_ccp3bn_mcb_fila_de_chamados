@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -25,12 +27,33 @@ public class ListaChamadosActivity extends AppCompatActivity {
         String nomeFila = origemIntent.getStringExtra("nome_fila");
         List <Chamado> chamados = buscaChamados(nomeFila);
         chamadosListView = findViewById(R.id.chamadosListView);
-        ArrayAdapter <Chamado> adapter =
+        /*ArrayAdapter <Chamado> adapter =
                 new ArrayAdapter<>(
                         this,
                         android.R.layout.simple_list_item_1,
-                        chamados);
+                        chamados);*/
+        ChamadoAdapter adapter = new ChamadoAdapter(this, chamados);
         chamadosListView.setAdapter(adapter);
+        /*chamadosListView.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+        });*/
+        chamadosListView.setOnItemClickListener((
+                adapterView, view, position, id
+        ) -> {
+            Chamado chamadoSelecionado = chamados.get(position);
+            Intent intent
+                    = new Intent (this,
+                    DetalhesChamadoActivity.class);
+            intent.putExtra(
+                    "chamado_selecionado",
+                    chamadoSelecionado);
+            startActivity(intent);
+
+        });
     }
 
     public List <Chamado> geraListaChamados (){

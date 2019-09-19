@@ -1,8 +1,9 @@
 package br.com.bossini.usjt_ccp3bn_mcb_fila_de_chamados;
 
+import java.io.Serializable;
 import java.util.List;
 
-class Fila {
+class Fila implements Serializable {
     private String nome;
     private int iconId;
     private List<Chamado> chamados;
