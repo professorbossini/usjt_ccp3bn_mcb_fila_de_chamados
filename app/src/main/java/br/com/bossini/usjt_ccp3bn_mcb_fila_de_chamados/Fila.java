@@ -4,13 +4,23 @@ import java.io.Serializable;
 import java.util.List;
 
 class Fila implements Serializable {
+    private int id;
     private String nome;
     private int iconId;
     private List<Chamado> chamados;
 
-    public Fila(String nome, int iconId) {
+    public Fila(int id, String nome, int iconId) {
+        setId(id);
         setNome(nome);
         setIconId(iconId);
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getNome() {
