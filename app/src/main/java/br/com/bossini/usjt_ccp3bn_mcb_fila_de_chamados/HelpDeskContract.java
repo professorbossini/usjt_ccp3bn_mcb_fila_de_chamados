@@ -150,6 +150,34 @@ public class HelpDeskContract {
         return sb.toString();
     }
 
+    public static String insertChamados (){
+        String t =
+                "INSERT INTO %s (%s, %s, %s, %s, %s, %s) VALUES (%d, '%s', %d, %d, '%s', %d);";
+        StringBuilder sb = new StringBuilder("");
+        for (Chamado chamado : chamados){
+            sb.append(
+                    String.format(
+                            Locale.getDefault(),
+                            t,
+                            ChamadoContract.TABLE_NAME,
+                            ChamadoContract.COLUMN_NAME_ID,
+                            ChamadoContract.COLUMN_NAME_DESCRICAO,
+                            ChamadoContract.COLUMN_NAME_DT_ABERTURA,
+                            ChamadoContract.COLUMN_NAME_DT_FECHAMENTO,
+                            ChamadoContract.COLUMN_NAME_STATUS,
+                            FilaContract.COLUMN_NAME_ID,
+                            chamado.getId(),
+                            chamado.getDescricao(),
+                            chamado.getDataAbertura().getTime(),
+                            chamado.getDataFechamento() == null ? null : chamado.getDataFechamento().getTime(),
+                            chamado.getStatus(),
+                            chamado.getFila().getId()
+                    )
+            );
+        }
+        return sb.toString();
+    }
+
 
 
     public static class ChamadoContract implements BaseColumns{
@@ -159,6 +187,12 @@ public class HelpDeskContract {
         public static final String COLUMN_NAME_STATUS = "status";
         public static final String COLUMN_NAME_DT_ABERTURA = "dt_abertura";
         public static final String COLUMN_NAME_DT_FECHAMENTO = "dt_fechamento";
+        public static final String DROP_TABLE = String.format(
+                Locale.getDefault(),
+                "DROP TABLE %s",
+                ChamadoContract.TABLE_NAME
+        );
+
     }
 
 
@@ -169,5 +203,10 @@ public class HelpDeskContract {
         public static final String COLUMN_NAME_ID = "id_fila";
         public static final String COLUMN_NAME_NOME = "nome";
         public static final String COLUMN_NAME_ICON_ID = "icon_id";
+        public static final String DROP_TABLE = String.format(
+                Locale.getDefault(),
+                "DROP TABLE %s",
+                FilaContract.TABLE_NAME
+        );
     }
 }
