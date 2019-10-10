@@ -16,16 +16,18 @@ import java.util.List;
 public class ListaChamadosActivity extends AppCompatActivity {
 
     private ListView chamadosListView;
-
+    private ChamadoDAO chamadoDAO;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_chamados);
+        chamadoDAO = new ChamadoDAO (this);
         Intent origemIntent = getIntent();
         String nomeFila = origemIntent.getStringExtra("nome_fila");
-        List <Chamado> chamados = buscaChamados(nomeFila);
+        //List <Chamado> chamados = buscaChamados(nomeFila);
+        List <Chamado> chamados = chamadoDAO.busca(nomeFila);
         chamadosListView = findViewById(R.id.chamadosListView);
         /*ArrayAdapter <Chamado> adapter =
                 new ArrayAdapter<>(

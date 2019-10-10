@@ -1,6 +1,7 @@
 package br.com.bossini.usjt_ccp3bn_mcb_fila_de_chamados;
 
 import android.provider.BaseColumns;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -62,7 +63,7 @@ public class HelpDeskContract {
                 "Aberto")
         );
         chamados.add(new Chamado (5,
-                filas.get(4),
+                filas.get(3),
                 "CRM",
                 new Date(),
                 null,
@@ -70,7 +71,7 @@ public class HelpDeskContract {
         );
         chamados.add(new Chamado (
                 6,
-                filas.get(4),
+                filas.get(3),
                 "Gestão de Orçamento",
                 new Date(),
                 null,
@@ -86,7 +87,7 @@ public class HelpDeskContract {
         );
         chamados.add(new Chamado (
                 8,
-                filas.get(4),
+                filas.get(3),
                 "Chatbot",
                 new Date(),
                 null,
@@ -94,7 +95,7 @@ public class HelpDeskContract {
         );
         chamados.add(new Chamado (
                 9,
-                filas.get(4),
+                filas.get(3),
                 "Chatbot",
                 new Date(),
                 null,
@@ -104,7 +105,7 @@ public class HelpDeskContract {
     public static String createTableFila (){
         return String.format(
                 Locale.getDefault(),
-                "CREATE TABLE %s ( %s INTEGER PRIMARY KEY, %s TEXT, %s INTEGER);",
+                "CREATE TABLE IF NOT EXISTS %s ( %s INTEGER PRIMARY KEY, %s TEXT, %s INTEGER);",
                 FilaContract.TABLE_NAME,
                 FilaContract.COLUMN_NAME_ID,
                 FilaContract.COLUMN_NAME_NOME,
@@ -116,8 +117,8 @@ public class HelpDeskContract {
 
     public static String createTableChamado (){
         return String.format(
-                Locale.getDefault(),
-                "CREATE TABLE %1$s (%2$s INTEGER PRIMARY KEY AUTOINCREMENT, %3$s TEXT, %4$s TEXT, %5$s INTEGER, %6$s INTEGER, %7$s INTEGER, FOREIGN KEY (%7$s) REFERENCES %8$s (%7$s) );",
+                //Locale.getDefault(),
+                "CREATE TABLE IF NOT EXISTS %1$s (%2$s INTEGER PRIMARY KEY AUTOINCREMENT, %3$s TEXT, %4$s TEXT, %5$s INTEGER, %6$s INTEGER, %7$s INTEGER, FOREIGN KEY (%7$s) REFERENCES %8$s (%7$s) );",
                 ChamadoContract.TABLE_NAME,
                 ChamadoContract.COLUMN_NAME_ID,
                 ChamadoContract.COLUMN_NAME_DESCRICAO,
@@ -151,21 +152,26 @@ public class HelpDeskContract {
     }
 
     public static String insertChamados (){
-        String t =
-                "INSERT INTO %s (%s, %s, %s, %s, %s, %s) VALUES (%d, '%s', %d, %d, '%s', %d);";
+        String t = String.format (
+                Locale.getDefault(),
+                "INSERT INTO %s (%s, %s, %s, %s, %s, %s) VALUES ",
+                ChamadoContract.TABLE_NAME,
+                ChamadoContract.COLUMN_NAME_ID,
+                ChamadoContract.COLUMN_NAME_DESCRICAO,
+                ChamadoContract.COLUMN_NAME_DT_ABERTURA,
+                ChamadoContract.COLUMN_NAME_DT_FECHAMENTO,
+                ChamadoContract.COLUMN_NAME_STATUS,
+                FilaContract.COLUMN_NAME_ID
+        );
+
         StringBuilder sb = new StringBuilder("");
         for (Chamado chamado : chamados){
+            Log.e("bossini", chamado.toString());
             sb.append(
                     String.format(
                             Locale.getDefault(),
-                            t,
-                            ChamadoContract.TABLE_NAME,
-                            ChamadoContract.COLUMN_NAME_ID,
-                            ChamadoContract.COLUMN_NAME_DESCRICAO,
-                            ChamadoContract.COLUMN_NAME_DT_ABERTURA,
-                            ChamadoContract.COLUMN_NAME_DT_FECHAMENTO,
-                            ChamadoContract.COLUMN_NAME_STATUS,
-                            FilaContract.COLUMN_NAME_ID,
+                            "(%d, '%s', %d, %d, '%s', %d),",
+
                             chamado.getId(),
                             chamado.getDescricao(),
                             chamado.getDataAbertura().getTime(),
@@ -175,7 +181,11 @@ public class HelpDeskContract {
                     )
             );
         }
-        return sb.toString();
+        String resultado = t + sb.toString();
+        resultado = resultado.substring(0, resultado.length() - 1);
+        resultado = resultado.concat(";");
+
+        return resultado;
     }
 
 

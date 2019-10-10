@@ -15,6 +15,11 @@ class Fila implements Serializable {
         setIconId(iconId);
     }
 
+    public Fila(String nome, int iconId) {
+        setNome(nome);
+        setIconId(iconId);
+    }
+
     public void setId(int id) {
         this.id = id;
     }

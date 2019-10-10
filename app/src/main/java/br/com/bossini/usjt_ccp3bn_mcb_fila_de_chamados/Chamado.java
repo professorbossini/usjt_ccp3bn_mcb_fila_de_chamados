@@ -14,18 +14,17 @@ public class Chamado implements Serializable {
     private String status;
     private Fila fila;
 
-    @NonNull
-    @Override
-    public String toString() {
-        return String.format(
-                Locale.getDefault(),
-                "%s: %s",
-                getDescricao(),
-                getStatus()
-        );
+    public Chamado(int id, Fila fila, String descricao, Date dataAbertura,
+                   Date dataFechamento, String status) {
+        setId(id);
+        setFila(fila);
+        setDescricao(descricao);
+        setDataAbertura(dataAbertura);
+        setDataFechamento(dataFechamento);
+        setStatus(status);
     }
 
-    public Chamado(int id, Fila fila, String descricao, Date dataAbertura,
+    public Chamado(Fila fila, String descricao, Date dataAbertura,
                    Date dataFechamento, String status) {
         setFila(fila);
         setDescricao(descricao);
@@ -80,5 +79,17 @@ public class Chamado implements Serializable {
 
     public void setFila(Fila fila) {
         this.fila = fila;
+    }
+
+    @Override
+    public String toString() {
+        return "Chamado{" +
+                "id=" + id +
+                ", descricao='" + descricao + '\'' +
+                ", dataAbertura=" + dataAbertura +
+                ", dataFechamento=" + dataFechamento +
+                ", status='" + status + '\'' +
+                ", fila=" + fila +
+                '}';
     }
 }
